@@ -1,4 +1,4 @@
-package C;
+package C.Enum;
 
 public enum Category {
     ELECTRONIC,

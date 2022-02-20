@@ -1,4 +1,6 @@
-package C;
+package C.Entity;
+
+import C.Enum.Category;
 
 public class Product {
     private String name;

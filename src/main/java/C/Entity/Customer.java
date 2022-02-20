@@ -1,4 +1,4 @@
-package C;
+package C.Entity;
 
 public class Customer {
     private String name;

@@ -1,4 +1,4 @@
-package C;
+package C.Entity;
 
 import java.util.Date;
 import java.util.List;
