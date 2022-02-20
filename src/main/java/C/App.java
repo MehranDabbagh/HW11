@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class App {
     public static void main(String[] args) {
@@ -14,6 +15,12 @@ public class App {
         products.add(new Product("TELEPHONE", Category.ELECTRONIC, 200));
         products.add(new Product("SPEAKER", Category.ELECTRONIC, 120));
         //*1*//
-     //   Predicate<Product> listOfElectronics = products.stream().map()
+       products
+                .stream()
+                .filter(x -> x.getCategory()==Category.ELECTRONIC)
+                .collect(Collectors.toList())
+                .forEach(x-> System.out.println(x.getName()));
+
+
     }
 }
