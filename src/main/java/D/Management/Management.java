@@ -1,11 +1,10 @@
-package Management;
+package D.Management;
 
-import CustomExceptions.OutOfRangeInput;
-import CustomExceptions.OutOfRangeTerm;
-import Entities.Course;
-import Entities.Employee;
-import Entities.Prof;
-import Entities.Student;
+
+import D.Entities.Course;
+import D.Entities.Employee;
+import D.Entities.Prof;
+import D.Entities.Student;
 
 import java.util.InputMismatchException;
 import java.util.Objects;
@@ -64,7 +63,7 @@ public class Management {
                 System.out.println("please enter 0 for editing firstname,1 for last name,2 for username,3 for password");
                int operator=input.nextInt();
                if(operator>3 || operator<0 ){
-                   throw new OutOfRangeInput("please enter something in range!");
+                   throw new CustomExceptions.OutOfRangeInput("please enter something in range!");
                }
                 System.out.println("enter the new value:");
                String newvalue=input.next();
@@ -72,7 +71,7 @@ public class Management {
             }}
         }
         System.out.println("there is no student with this username!");}
-        catch (OutOfRangeInput e){
+        catch (CustomExceptions.OutOfRangeInput e){
             System.out.println(e.getMessage());
         }
         catch (NullPointerException e){
@@ -118,7 +117,7 @@ public class Management {
                         System.out.println("please enter 0 for editing firstname,1 for last name,2 for username,3 for password,4 for type");
                         int operator = input.nextInt();
                         if(operator>4 || operator<0){
-                            throw new OutOfRangeInput("please enter something in range!");
+                            throw new CustomExceptions.OutOfRangeInput("please enter something in range!");
                         }
                         System.out.println("enter the new value:");
                         String newvalue = input.next();
@@ -140,7 +139,7 @@ public class Management {
             System.out.println("there is no prof with this username!");
         }catch (InputMismatchException e){
             System.out.println("please enter a number!");
-        }catch (OutOfRangeInput e){
+        }catch (CustomExceptions.OutOfRangeInput e){
             System.out.println(e.getMessage());
         }
     }
@@ -178,7 +177,7 @@ employeeIndex++;
                 try {
                     int operator=input.nextInt();
                     if(operator>3 || operator<0){
-                        throw new OutOfRangeInput("please enter something in range!");
+                        throw new CustomExceptions.OutOfRangeInput("please enter something in range!");
                     }
                     System.out.println("enter new value:");
                     String newvalue=input.next();
@@ -186,7 +185,7 @@ employeeIndex++;
                     return;
                 }catch (InputMismatchException e){
                     System.out.println("please enter a number!");
-                }catch (OutOfRangeInput e){
+                }catch (CustomExceptions.OutOfRangeInput e){
                     System.out.println(e.getMessage());
                 }
 
@@ -223,7 +222,7 @@ employeeIndex++;
                    try {
                        int operator=input.nextInt();
                        if(operator>3 || operator<0 ){
-                           throw new OutOfRangeInput("please enter something in range!");
+                           throw new CustomExceptions.OutOfRangeInput("please enter something in range!");
                        }
                        System.out.println("enter new value:");
                        String newvalue=input.next();
@@ -231,7 +230,7 @@ employeeIndex++;
                        return;
                    }catch (InputMismatchException e){
                        System.out.println("please enter a number!");
-                   }catch (OutOfRangeInput e){
+                   }catch (CustomExceptions.OutOfRangeInput e){
                        System.out.println(e.getMessage());
                    }
 
@@ -269,12 +268,12 @@ catch (InputMismatchException e){
         try {
             int score=input.nextInt();
             if(score>20 || score<0){
-                throw new OutOfRangeInput( "please enter something in range!");
+                throw new CustomExceptions.OutOfRangeInput( "please enter something in range!");
             }
             students=profManagement.submittingScore(students,studentIndex,course,score,student,username);
         }catch (InputMismatchException e){
             System.out.println("please enter a number!");
-        }catch (OutOfRangeInput e){
+        }catch (CustomExceptions.OutOfRangeInput e){
             System.out.println(e.getMessage());
         }
 

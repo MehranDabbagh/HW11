@@ -1,12 +1,12 @@
-package Management;
+package D.Management;
 
-import Entities.Employee;
-import Entities.Prof;
+
+import D.Entities.Employee;
 
 import java.util.Objects;
 
 public class EmployeeManagement {
-    public Employee register(String firstName,String lastName,String username,String password){
+    public Employee register(String firstName, String lastName, String username, String password){
         Employee employee=new Employee(firstName,lastName,username,password);
         return employee;
     }

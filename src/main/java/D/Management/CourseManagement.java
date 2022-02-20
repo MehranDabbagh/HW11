@@ -1,11 +1,13 @@
-package Management;
+package D.Management;
 
-import Entities.Course;
+
+
+import D.Entities.Course;
 
 import java.util.Objects;
 
 public class CourseManagement {
-    public Course register(String coursename,String profname,String term,int unit){
+    public Course register(String coursename, String profname, String term, int unit){
         Course course=new Course(coursename,profname,term,unit);
         return course;
     }

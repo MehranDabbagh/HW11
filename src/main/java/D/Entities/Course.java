@@ -1,4 +1,4 @@
-package Entities;
+package D.Entities;
 
 public class Course {
     private String name;

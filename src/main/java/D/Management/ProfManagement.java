@@ -1,13 +1,14 @@
-package Management;
+package D.Management;
 
-import Entities.Course;
-import Entities.Prof;
-import Entities.Student;
+
+import D.Entities.Course;
+import D.Entities.Prof;
+import D.Entities.Student;
 
 import java.util.Objects;
 
 public class ProfManagement {
-    public Prof register(String firstName,String lastName,String username,String password,String type){
+    public Prof register(String firstName, String lastName, String username, String password, String type){
         Prof prof=new Prof(firstName,lastName,username,password,type);
         return prof;
     }
@@ -44,7 +45,7 @@ public class ProfManagement {
             }
         }
     }
-    public Student[] submittingScore(Student[] students,int studentIndex,String course,int score,String student,String profUserName){
+    public Student[] submittingScore(Student[] students, int studentIndex, String course, int score, String student, String profUserName){
         if(score<0 || score >20){
             System.out.println("undefined!");
          return  students;
@@ -61,7 +62,7 @@ public class ProfManagement {
         }
         return students;
     }
-public void showingProfPayment(Prof[] profs, int profIndex, Course[] courses,int courseIndex, String username,String term){
+public void showingProfPayment(Prof[] profs, int profIndex, Course[] courses, int courseIndex, String username, String term){
     for(int i=0;i<profIndex;i++){
         if(profs[i]!=null){
             if(Objects.equals(profs[i].getUsername(), username)){

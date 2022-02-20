@@ -1,4 +1,4 @@
-package Entities;
+package D.Entities;
 
 public class Employee extends Person{
     private String payment;

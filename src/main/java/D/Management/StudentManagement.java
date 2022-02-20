@@ -1,13 +1,13 @@
-package Management;
+package D.Management;
 
-import Entities.Course;
-import Entities.Student;
 
-import java.util.List;
+import D.Entities.Course;
+import D.Entities.Student;
+
 import java.util.Objects;
 
 public class StudentManagement {
-    public Student register(String firstName,String lastName,String username,String password){
+    public Student register(String firstName, String lastName, String username, String password){
         Student student=new Student(firstName,lastName,username,password);
         return student;
     }
@@ -42,7 +42,7 @@ public class StudentManagement {
             }
         }
     }
-    public Student[]  entekhabvahed(Student[] students, int studentIndex, String username, Course[] courses,int courseIndex,int courseId){
+    public Student[]  entekhabvahed(Student[] students, int studentIndex, String username, Course[] courses, int courseIndex, int courseId){
         for(int i=0;i<studentIndex;i++) {
             if (students[i] != null) {
                 if (Objects.equals(students[i].getUsername(), username)) {

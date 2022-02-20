@@ -1,9 +1,6 @@
+package D.View;
 
-
-import CustomExceptions.OutOfRangeInput;
-import CustomExceptions.OutOfRangeTerm;
-import CustomExceptions.TermFormat;
-import Management.Management;
+import D.Management.Management;
 
 import java.util.InputMismatchException;
 import java.util.Objects;
@@ -56,7 +53,7 @@ public static void employeeMenu(String username,String password)  {
                  input.nextLine();
                 operator=input.nextInt();
                 if(operator>14 || operator <1){
-                    throw new OutOfRangeInput("please enter something in range!");
+                    throw new CustomExceptions.OutOfRangeInput("please enter something in range!");
                 }
 
             switch (operator){
@@ -75,7 +72,7 @@ public static void employeeMenu(String username,String password)  {
                 case 13:management.showingEmployeePayment(username);break;
                 case 14:condition=false;break;
             }}
-              catch (OutOfRangeInput e){
+              catch (CustomExceptions.OutOfRangeInput e){
         System.out.println(e.getMessage());
             }
             catch (InputMismatchException e){
@@ -83,7 +80,7 @@ public static void employeeMenu(String username,String password)  {
             }
         }
 }
-public static void studentMenu(String username,String password) throws OutOfRangeInput{
+public static void studentMenu(String username,String password) throws CustomExceptions.OutOfRangeInput {
        boolean condition=true;
         while(condition){
             try {
@@ -94,7 +91,7 @@ public static void studentMenu(String username,String password) throws OutOfRang
                 System.out.println("enter 5 for exit");
                 int operator=input.nextInt();
                 if(operator>5 || operator<1){
-                    throw new OutOfRangeInput("please enter something in range!");
+                    throw new CustomExceptions.OutOfRangeInput("please enter something in range!");
                 }
                 switch (operator){
                     case 1:management.showingStudentDetail(username);break;
@@ -106,7 +103,7 @@ public static void studentMenu(String username,String password) throws OutOfRang
             }catch (InputMismatchException e){
                 System.out.println("please enter a number!");
             }
-         catch (OutOfRangeInput e){
+         catch (CustomExceptions.OutOfRangeInput e){
              System.out.println(e.getMessage());
           }
         }
@@ -122,7 +119,7 @@ public static void profMenu(String username,String password){
             input.nextLine();
             int operator=input.nextInt();
             if(operator>4 || operator<0){
-                throw new OutOfRangeInput("please enter something in range!");
+                throw new CustomExceptions.OutOfRangeInput("please enter something in range!");
             }
             switch (operator){
                 case 1:management.showingProfDetail(username);break;
@@ -132,25 +129,25 @@ public static void profMenu(String username,String password){
                    try{
                        String input1=input.next();
                        if(input1.length()!=6 || input1.charAt(5)!='/'){
-                           throw new TermFormat("wrong term format!");
+                           throw new CustomExceptions.TermFormat("wrong term format!");
                        }
                     String[] a=input1.split("/");
                     if(Integer.valueOf(a[0])<1390 || Integer.valueOf(a[1])>2 || Integer.valueOf(a[1])<1 || Integer.valueOf(a[0])>1400 )
                     {
-                        throw new OutOfRangeTerm("there is no term with this details!");
+                        throw new CustomExceptions.OutOfRangeTerm("there is no term with this details!");
                     }
                     management.showingProfPayment(username,input1);
                    }
                    catch (InputMismatchException e){
                        System.out.println("please enter a string!");
                    }
-                   catch (OutOfRangeTerm e){
+                   catch (CustomExceptions.OutOfRangeTerm e){
                        System.out.println(e.getMessage());
                    }
                    catch (NullPointerException e){
                        System.out.println("please enter something!");
                    }
-                   catch (TermFormat e){
+                   catch (CustomExceptions.TermFormat e){
                        System.out.println(e.getMessage());
                    }
                    finally {
@@ -164,7 +161,7 @@ public static void profMenu(String username,String password){
         catch (InputMismatchException e){
             System.out.println("please enter a number!");
         }
-        catch (OutOfRangeInput e){
+        catch (CustomExceptions.OutOfRangeInput e){
             System.out.println(e.getMessage());
         }
 
