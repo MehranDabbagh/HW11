@@ -37,9 +37,7 @@ public class Main {
                     { System.out.println("there is no acc with this username and password please try again!");}
             }
         }}
-
-
-public static void employeeMenu(String username,String password)  {
+    public static void employeeMenu(String username,String password)  {
         boolean condition=true;
         while(condition){
             try{
@@ -80,7 +78,7 @@ public static void employeeMenu(String username,String password)  {
             }
         }
 }
-public static void studentMenu(String username,String password) throws CustomExceptions.OutOfRangeInput {
+    public static void studentMenu(String username,String password) throws CustomExceptions.OutOfRangeInput {
        boolean condition=true;
         while(condition){
             try {
@@ -108,7 +106,7 @@ public static void studentMenu(String username,String password) throws CustomExc
           }
         }
 }
-public static void profMenu(String username,String password){
+    public static void profMenu(String username,String password){
     boolean condition=true;
     while(condition){
         try {
