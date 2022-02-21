@@ -6,15 +6,14 @@ public class Student extends Person{
     private Course[] courses;
     private int[] scores;
     private int index;
-    public Student(String firstname,String lastname,String username,String password){
-       this.setFirstname(firstname);
-       this.setLastname(lastname);
-       this.setUsername(username);
-       this.setPassword(password);
-       courses=new Course[20];
-       scores=new int[20];
-       index=0;
+
+    public Student(Long id, Course[] courses, int[] scores, int index) {
+        super(id);
+        this.courses = courses;
+        this.scores = scores;
+        this.index = index;
     }
+
     public int unitPerTerm(String term){
         int sum=0;
         for(int i=0;i<index;i++){

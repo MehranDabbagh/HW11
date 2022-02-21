@@ -1,10 +1,14 @@
 package D.Entities;
 
-public  class Person {
+public  class Person  extends BaseEntity{
     private String firstname;
     private String lastname;
     private String username;
     private String password;
+
+    public Person(Long id) {
+        super(id);
+    }
 
     public String getFirstname() {
         return firstname;

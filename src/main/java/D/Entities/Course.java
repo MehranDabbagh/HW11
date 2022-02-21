@@ -1,14 +1,13 @@
 package D.Entities;
 
-public class Course {
+public class Course extends BaseEntity {
     private String name;
     private String profname;
     private String term;
     private int unit;
-public Course(){
 
-}
-    public Course(String name, String profname, String term, int unit) {
+    public Course(Long id, String name, String profname, String term, int unit) {
+        super(id);
         this.name = name;
         this.profname = profname;
         this.term = term;
