@@ -6,7 +6,7 @@ public  class Person extends BaseEntity{
     private String username;
     private String password;
 
-    public Person(Long id, String firstname, String lastname, String username, String password) {
+    public Person(Integer id, String firstname, String lastname, String username, String password) {
         super(id);
         this.firstname = firstname;
         this.lastname = lastname;

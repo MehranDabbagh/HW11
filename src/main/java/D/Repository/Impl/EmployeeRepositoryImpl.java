@@ -1,53 +1,108 @@
 package D.Repository.Impl;
 
+import D.Entities.Course;
 import D.Entities.Employee;
 import D.Repository.EmployeeRepository;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class EmployeeRepositoryImpl implements EmployeeRepository {
-    private List<Employee> employees;
 
-    public EmployeeRepositoryImpl() {
-        employees=new ArrayList<>();
+    @Override
+    public Integer create(Employee employee) {
+        String sql="insert into employee(firstname,lastname,username,password) values (?,?,?,?)";
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setString(1, employee.getFirstname());
+            preparedStatement.setString(2,employee.getLastname());
+            preparedStatement.setString(3,employee.getUsername());
+            preparedStatement.setString(4, employee.getPassword());
+            preparedStatement.execute();
+            sql="select id from employee where firstname=? and lastname=? and username=? and password=? ";
+            preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setString(1, employee.getFirstname());
+            preparedStatement.setString(2,employee.getLastname());
+            preparedStatement.setString(3,employee.getUsername());
+            preparedStatement.setString(4, employee.getPassword());
+            ResultSet resultSet= preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt("id");}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
-    public Long create(Employee employee) {
-try {
-employee.setId(employees.size()+1l);
- employees.add(employee);
-}catch (NullPointerException e) {
-}
-        return employee.getId();
-    }
+    public Employee findById(Integer id) {
+        String sql="select * from employee where id=?";
+        try{
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            if(resultSet.next()) {
+                Employee employee=new Employee(resultSet.getInt("id"),
+                        resultSet.getString("firstname"),
+                        resultSet.getString("lastname"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"));
+                return employee;
+            }
+        }catch (SQLException e){
 
-    @Override
-    public Employee findById(Long id) {
-        return employees.stream().filter(x-> Objects.equals(x.getId(), id)).collect(Collectors.toList()).get(0);
+        }
+        return null;
     }
 
     @Override
     public List<Employee> findAll() {
-        return employees;
+        String sql="select * from employee ";
+        List<Employee> employees=new ArrayList<>();
+        try{
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Employee employee=new Employee(resultSet.getInt("id"),
+                        resultSet.getString("firstname"),
+                        resultSet.getString("lastname"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"));
+                employees.add(employee);
+            }
+            return employees;
+        }catch (SQLException e){
+
+        }
+        return null;
     }
 
     @Override
     public void Update(Employee employee) {
-        employees
-                .stream()
-                .filter(student1 -> Objects.equals(student1.getUsername(), employee.getUsername())).forEach(x->x=employee);
-
+        String sql="update employee set firstname=? ,lastname=?,username=?,password=? where id=?";
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setString(1, employee.getFirstname());
+            preparedStatement.setString(2,employee.getLastname());
+            preparedStatement.setString(3,employee.getUsername());
+            preparedStatement.setString(4, employee.getPassword());
+            preparedStatement.setInt(5,employee.getId());
+            preparedStatement.execute();
+        }catch (SQLException e){}
     }
 
     @Override
-    public void Delete(Long id) {
-        employees.remove(id);
-        employees
-                .stream()
-                .filter(student1 -> Objects.equals(student1.getId(),id) && student1.getId()>id).forEach(x->x.setId(x.getId()-1));
+    public void Delete(Integer id) {
+        String sql="delete  from employee where id=?";
+        try {
+            PreparedStatement preparedStatement= connection.prepareStatement(sql);
+            preparedStatement.setInt(1,id);
+            preparedStatement.execute();
+        }catch (SQLException e){}
     }
 }

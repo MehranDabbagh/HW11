@@ -2,5 +2,5 @@ package D.Repository;
 
 import D.Entities.Prof;
 
-public interface ProfRepository extends BaseRepository<Prof,Long> {
+public interface ProfRepository extends BaseRepository<Prof,Integer> {
 }

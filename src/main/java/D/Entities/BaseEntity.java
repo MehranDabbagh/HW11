@@ -1,17 +1,17 @@
 package D.Entities;
 
 public class BaseEntity {
-    private Long id;
+    private Integer id;
 
-    public BaseEntity(Long id) {
+    public BaseEntity(Integer id) {
         this.id = id;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }

@@ -2,14 +2,16 @@ package D.Entities;
 
 public class Course extends BaseEntity {
     private String name;
-    private String profname;
-    private String term;
+    private Integer profid;
+    private Integer year;
+    private Integer term;
     private int unit;
 
-    public Course(Long id, String name, String profname, String term, int unit) {
+    public Course(Integer id, String name, Integer profid, Integer year, Integer term, int unit) {
         super(id);
         this.name = name;
-        this.profname = profname;
+        this.profid = profid;
+        this.year = year;
         this.term = term;
         this.unit = unit;
     }
@@ -18,28 +20,36 @@ public class Course extends BaseEntity {
         return name;
     }
 
-    public String getProfname() {
-        return profname;
-    }
-
-    public String getTerm() {
-        return term;
-    }
-
-    public int getUnit() {
-        return unit;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setProfname(String profname) {
-        this.profname = profname;
+    public Integer getProfid() {
+        return profid;
     }
 
-    public void setTerm(String term) {
+    public void setProfid(Integer profid) {
+        this.profid = profid;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public Integer getTerm() {
+        return term;
+    }
+
+    public void setTerm(Integer term) {
         this.term = term;
+    }
+
+    public int getUnit() {
+        return unit;
     }
 
     public void setUnit(int unit) {
