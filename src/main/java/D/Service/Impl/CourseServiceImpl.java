@@ -13,13 +13,14 @@ public class CourseServiceImpl implements CourseService {
         courseRepository=new CourseRepositoryImpl();
     }
 
+
     @Override
-    public Long create(Course course) {
+    public Integer create(Course course) {
         return courseRepository.create(course);
     }
 
     @Override
-    public Course findById(Long id) {
+    public Course findById(Integer id) {
         return courseRepository.findById(id);
     }
 
@@ -34,7 +35,7 @@ courseRepository.Update(course);
     }
 
     @Override
-    public void Delete(Long id) {
+    public void Delete(Integer id) {
 courseRepository.Delete(id);
     }
 }

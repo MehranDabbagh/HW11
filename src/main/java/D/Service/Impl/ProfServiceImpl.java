@@ -16,24 +16,24 @@ public class ProfServiceImpl implements ProfService {
         profRepository=new ProfRepositoryImpl();
     }
 
+
     @Override
-    public Long login(Prof prof) {
+    public Integer login(Prof prof) {
         List<Prof> profs =  profRepository.findAll();
         List<Prof> profs1=      profs.stream().filter(x-> Objects.equals(x.getUsername(), prof.getUsername()) && Objects.equals(x.getPassword(), prof.getPassword())).collect(Collectors.toList());
         if(profs1.size()>0){
             return profs1.get(0).getId();
         }
-        return 0l;
-
+        return 0;
     }
 
     @Override
-    public Long create(Prof prof) {
+    public Integer create(Prof prof) {
         return profRepository.create(prof);
     }
 
     @Override
-    public Prof findById(Long id) {
+    public Prof findById(Integer id) {
         return profRepository.findById(id);
     }
 
@@ -48,7 +48,7 @@ profRepository.Update(prof);
     }
 
     @Override
-    public void Delete(Long id) {
-      profRepository.Delete(id);
+    public void Delete(Integer id) {
+profRepository.Delete(id);
     }
 }
