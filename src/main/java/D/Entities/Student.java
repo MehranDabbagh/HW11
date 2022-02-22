@@ -7,8 +7,8 @@ public class Student extends Person{
     private int[] scores;
     private int index;
 
-    public Student(Long id, Course[] courses, int[] scores, int index) {
-        super(id);
+    public Student(Long id, String firstname, String lastname, String username, String password, Course[] courses, int[] scores, int index) {
+        super(id, firstname, lastname, username, password);
         this.courses = courses;
         this.scores = scores;
         this.index = index;
@@ -24,7 +24,7 @@ public class Student extends Person{
         return sum;
     }
     public void entekhabvahed(Course course){
-        courses[index]=new Course();
+      //  courses[index]=new Course();
         courses[index]=course;
         scores[index]=0;
         index++;

@@ -16,19 +16,20 @@ public class ProfRepositoryImpl implements ProfRepository {
     }
 
     @Override
-    public void create(Prof prof) {
+    public Long create(Prof prof) {
         try {
-
+            prof.setId(profs.size()+1L);
             profs.add(prof);
         }catch (NullPointerException e){
 
         }
+        return prof.getId();
 
     }
 
     @Override
-    public Prof findByUsername(String username) {
-        return profs.stream().filter(x-> Objects.equals(x.getUsername(), username)).collect(Collectors.toList()).get(0);
+    public Prof findById(Long id) {
+        return profs.stream().filter(x-> Objects.equals(x.getId(), id)).collect(Collectors.toList()).get(0);
 
     }
 
@@ -46,7 +47,10 @@ public class ProfRepositoryImpl implements ProfRepository {
     }
 
     @Override
-    public void Delete(Prof prof) {
-profs.remove(prof);
+    public void Delete(Long id) {
+        profs.remove(id);
+        profs
+                .stream()
+                .filter(student1 -> Objects.equals(student1.getId(),id) && student1.getId()>id).forEach(x->x.setId(x.getId()-1));
     }
 }

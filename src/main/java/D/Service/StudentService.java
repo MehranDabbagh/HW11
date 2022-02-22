@@ -2,5 +2,5 @@ package D.Service;
 
 import D.Entities.Student;
 
-public interface StudentService extends BaseService<Student,Integer> {
+public interface StudentService extends BaseService<Student,Long> {
 }

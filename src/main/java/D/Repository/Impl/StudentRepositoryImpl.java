@@ -16,18 +16,19 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public void create(Student student) {
+    public Long create(Student student) {
         try {
-
+student.setId(students.size()+1l);
             students.add(student);
         }catch (NullPointerException e){
 
         }
+        return student.getId();
     }
 
     @Override
-    public Student findByUsername(String username) {
-        return students.stream().filter(x-> Objects.equals(x.getUsername(), username)).collect(Collectors.toList()).get(0);
+    public Student findById(Long id) {
+        return students.stream().filter(x-> Objects.equals(x.getId(), id)).collect(Collectors.toList()).get(0);
 
     }
 
@@ -44,7 +45,10 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public void Delete(Student student) {
-        students.remove(student);
+    public void Delete(Long id) {
+        students.remove(id);
+        students
+                .stream()
+                .filter(student1 -> Objects.equals(student1.getId(),id) && student1.getId()>id).forEach(x->x.setId(x.getId()-1));
     }
 }

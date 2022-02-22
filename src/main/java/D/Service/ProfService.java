@@ -2,5 +2,5 @@ package D.Service;
 
 import D.Entities.Prof;
 
-public interface ProfService extends BaseService<Prof,Integer> {
+public interface ProfService extends BaseService<Prof,Long> {
 }

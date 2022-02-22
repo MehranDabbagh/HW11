@@ -16,37 +16,38 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public boolean login(Employee employee) {
+    public Long login(Employee employee) {
       List<Employee> employees=  employeeRepository.findAll();
 List<Employee> employees1=      employees.stream().filter(x-> Objects.equals(x.getUsername(), employee.getUsername()) && Objects.equals(x.getPassword(), employee.getPassword())).collect(Collectors.toList());
     if(employees1.size()>0){
-        return true;
+        return employees1.get(0).getId();
     }
-      return false;
-    }
-
-    @Override
-    public Integer create(Employee employee) {
-        return null;
+      return 0l;
     }
 
     @Override
-    public Employee findById(Integer id) {
-        return null;
+    public Long create(Employee employee) {
+
+        return employeeRepository.create(employee);
+    }
+
+    @Override
+    public Employee findById(Long id) {
+        return employeeRepository.findById(id);
     }
 
     @Override
     public List<Employee> findAll() {
-        return null;
+        return employeeRepository.findAll();
     }
 
     @Override
     public void Update(Employee employee) {
-
+    employeeRepository.Update(employee);
     }
 
     @Override
-    public void Delete(Integer id) {
-
+    public void Delete(Long id) {
+       employeeRepository.Delete(id);
     }
 }
