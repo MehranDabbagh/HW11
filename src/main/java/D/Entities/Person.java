@@ -1,6 +1,8 @@
 package D.Entities;
 
-public  class Person extends BaseEntity{
+import D.Entities.Base.BaseEntity;
+
+public  class Person extends BaseEntity {
     private String firstname;
     private String lastname;
     private String username;

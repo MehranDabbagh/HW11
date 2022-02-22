@@ -1,4 +1,4 @@
-package D.Entities;
+package D.Entities.Base;
 
 public class BaseEntity {
     private Integer id;

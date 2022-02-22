@@ -1,5 +1,7 @@
 package D.Entities;
 
+import D.Entities.Base.BaseEntity;
+
 public class Course extends BaseEntity {
     private String name;
     private Integer profid;

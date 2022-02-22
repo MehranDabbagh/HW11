@@ -1,8 +1,8 @@
-package D.Repository;
+package D.Repository.Base;
 
 
 
-import D.Entities.BaseEntity;
+import D.Entities.Base.BaseEntity;
 import D.MyConnection.PostgresConnection;
 
 import java.sql.Connection;
