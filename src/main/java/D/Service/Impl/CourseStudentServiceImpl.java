@@ -35,5 +35,10 @@ courseStudentRepository.scoring(student,course,score);
         return courseStudentRepository.score(student,course);
     }
 
+    @Override
+    public void Delete(Student student, Course course) {
+        courseStudentRepository.delete(student,course);
+    }
+
 
 }

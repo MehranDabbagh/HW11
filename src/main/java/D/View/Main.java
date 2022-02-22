@@ -647,9 +647,135 @@ if(id>0){
         }
     }
     public static void unitSelecting(Integer id){
-        boolean flag=true;
-        while(flag){
+        try {
+            System.out.println("please enter year:");
+            Integer yearOfCourse = input.nextInt();
+            if (yearOfCourse > 1400 || yearOfCourse < 1390) {
+                throw new OutOfRangeInput("there is no year with this condition!");
+            }
+            System.out.println("please enter term:");
+            Integer term = input.nextInt();
+            if (term > 2 || term < 1) {
+                throw new OutOfRangeInput("wrong type of term!");
+            }
+            boolean flag = true;
+            while (flag) {
+                System.out.println("1-adding a new course" + "\n" + "2-deleting a course" + "\n" + "3-exit");
+                  Integer operator= input.nextInt();
+                  if(operator>3 || operator<1){
+                      throw new OutOfRangeInput("please enter something in range!");
+                  }
+                  switch (operator){
+                      case 1:addingUnit(yearOfCourse,term,id);break;
+                      case 2:deletingUnit(yearOfCourse,term,id);break;
+                      case 3:flag=false;break;
+                  }
+
+            }
+        }catch (InputMismatchException e){
+            System.out.println("please enter a number!");
+        }catch (OutOfRangeInput e){
+            System.out.println(e.getMessage());
+        }
+    }
+    public static void addingUnit(Integer year,Integer term,Integer id){
+        List<Course> courses=courseService.findAll();
+        for (Course course:courses
+             ) {
+            if(Objects.equals(course.getYear(), year) && Objects.equals(course.getTerm(), term)){
+                System.out.println("id:" + course.getId() + " course name:" + course.getName() + " prof id:" + course.getProfid()+" :year"+
+                        course.getYear()+" term:"+course.getTerm()+
+                        " unit:"+course.getUnit());
+            }
+        }
+        Integer exYear= 0;
+        Integer exTerm=  0;
+        if(term==1){
+             exYear= year-1;
+          exTerm=  term+1;
+        }else {
+             exYear= year;
+             exTerm=  term-1;
+        }
+        Integer scoreCounter=0;
+        Integer unitCounter=0;
+        Student student=studentService.findById(id);
+        for (Course course:courses
+        ) {
+            if(Objects.equals(course.getYear(), exYear) && Objects.equals(course.getTerm(), exTerm)){
+                scoreCounter+=courseStudentService.score(student,course);
+                unitCounter+=course.getUnit();
+            }
+        }
+        Integer lastTermAvg=0;
+        if(unitCounter>0){ lastTermAvg=scoreCounter/unitCounter;}
+        unitCounter=0;
+
+        System.out.println("please enter the id of the course:");
+        try {
+            Integer courseId=input.nextInt();
+           Course course= courseService.findById(courseId);
+           if(course==null || Objects.equals(course.getYear(), year) && Objects.equals(course.getTerm(), term)){
+               throw new OutOfRangeInput("there is no course with this id in this term! ");
+           }
+            for (Course course1:courses
+            ) {
+
+                if(Objects.equals(course1.getYear(), year) && Objects.equals(course1.getTerm(), term) && Objects.equals(course1.getId(), course.getId())){
+                    System.out.println("you have already picked this unit !");
+                    return;
+
+                }else if(Objects.equals(course1.getYear(), year) && Objects.equals(course1.getTerm(), term)){
+                    unitCounter+=course.getUnit();
+                }
+            }
+           if(lastTermAvg>18){
+               if(unitCounter+course.getUnit()>24){
+                   System.out.println("you can not pick more than 24 unit!");
+               }else {courseStudentService.unitSelecting(student,course);return;}
+
+           }else {
+               if(unitCounter+course.getUnit()>20){
+                   System.out.println("you can not pick more than 20 unit!");
+               }else {
+                   courseStudentService.unitSelecting(student,course);return;
+               }
+           }
+        }catch (InputMismatchException e){
+            System.out.println("please enter a number!");
+        }catch (OutOfRangeInput e){
+            System.out.println(e.getMessage());
+        }
+
+    }
+    public static void deletingUnit(Integer year,Integer term,Integer id){
+        Student student=studentService.findById(id);
+        List<Integer> courses=courseStudentService.courseByStudentId(id);
+        Course course=new Course();
+        for (Integer a:courses
+             ) {
+            course=courseService.findById(a);
+            if(course!=null && Objects.equals(course.getYear(), year) && Objects.equals(course.getTerm(), term)){
+                System.out.println("id:" + course.getId() + " course name:" + course.getName() + " prof id:" + course.getProfid()+" :year"+
+                        course.getYear()+" term:"+course.getTerm()+
+                        " unit:"+course.getUnit());
+            }
+        }
+        System.out.println("please enter id of the course you want to delete:");
+        try {
+            Integer courseId=input.nextInt();
+            Course course1=courseService.findById(courseId);
+            if(course1==null || !Objects.equals(course1.getYear(), year) || !Objects.equals(course.getTerm(), term)){
+                throw new OutOfRangeInput("there is no course with this id!");
+            }
+         if(courseStudentService.score(student,course1)>0){
+             System.out.println("you can not delete this unit! it has already been scored!");
+             return;
+         }
+         courseStudentService.Delete(student,course);
+        }catch (InputMismatchException e){
 
         }
+
     }
 }

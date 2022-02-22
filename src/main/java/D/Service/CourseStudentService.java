@@ -10,5 +10,6 @@ public interface CourseStudentService {
     void scoring(Student student, Course course,Integer score);
     List<Integer> courseByStudentId( Integer studentId);
     Integer score(Student student,Course course);
+    void Delete(Student student,Course course);
 
 }

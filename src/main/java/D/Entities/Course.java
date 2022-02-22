@@ -18,6 +18,9 @@ public class Course extends BaseEntity {
         this.unit = unit;
     }
 
+    public Course() {
+    }
+
     public Course(String name, Integer profid, Integer year, Integer term, int unit) {
         this.name = name;
         this.profid = profid;
