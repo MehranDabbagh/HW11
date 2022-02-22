@@ -121,7 +121,45 @@ public class Main {
         }
     }
     public static void studentMenu(Integer Id){
+boolean flag=true;
+while(flag){
+    System.out.println("1-showing details"+"\n"+"2-showing all courses"+"\n"+"3-unit selecting"+"\n"+"4-courses till now"+"\n"+"5-exit");
+    try {
+        Integer operator= input.nextInt();
+        if(operator>5 || operator<1){
+            throw new OutOfRangeInput("please enter something in range!");
+        }
 
+        Student student=studentService.findById(Id);
+        switch (operator){
+            case 1:
+                System.out.println("id:" + student.getId() + " firstname:" + student.getFirstname() + " lastname:" + student.getLastname());break;
+            case 2:List<Course> courses=courseService.findAll();
+                for (Course course:courses
+                     ) {
+                    System.out.println("id:" + course.getId() + " course name:" + course.getName() + " prof id:" + course.getProfid()+" :year"+
+                            course.getYear()+" term:"+course.getTerm()+
+                            " unit:"+course.getUnit());
+                }
+                break;
+            case 3:unitSelecting(Id);break;
+            case 4:List<Integer> courseIds=courseStudentService.courseByStudentId(Id);
+                for (Integer courseid:courseIds
+                     ) {
+                    Course course=courseService.findById(courseid);
+                    System.out.println("id:" + course.getId() + " course name:" + course.getName() + " prof id:" + course.getProfid()+" :year"+
+                            course.getYear()+" term:"+course.getTerm()+
+                            " unit:"+course.getUnit()+" score:"+courseStudentService.score(student,course));
+                }
+                break;
+            case 5:flag=false;break;
+        }
+    }catch (InputMismatchException e){
+        System.out.println("please enter a number!");
+    }catch (OutOfRangeInput e){
+        System.out.println(e.getMessage());
+    }
+}
     }
     public static void CUD(Integer operator1){
         boolean flag=true;
@@ -562,7 +600,7 @@ if(id>0){
                 if(student==null){
                     throw new OutOfRangeInput("there is no student with this id! try again!");
                 }
-         List<Integer> coursesId= courseStudentService.courseByTerm(studentId);
+         List<Integer> coursesId= courseStudentService.courseByStudentId(studentId);
             for (Integer courseId1:coursesId
                  ) {
                 if(Objects.equals(courseId1, courseId)){
@@ -606,6 +644,12 @@ if(id>0){
             System.out.println("your salary is :"+5000+(counter*1000));
         }else {
             System.out.println("your salary is :"+(counter*1000));
+        }
+    }
+    public static void unitSelecting(Integer id){
+        boolean flag=true;
+        while(flag){
+
         }
     }
 }

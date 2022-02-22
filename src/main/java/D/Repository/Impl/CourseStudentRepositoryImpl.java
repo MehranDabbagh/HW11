@@ -62,4 +62,20 @@ public class CourseStudentRepositoryImpl implements CourseStudentRepository {
         }catch (SQLException e){}
 
     }
+
+    @Override
+    public Integer score(Student student, Course course) {
+        String sql="select score from studentscourses where studentid=? and courseid=?";
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setInt(1,student.getId());
+            preparedStatement.setInt(2,course.getId());
+            ResultSet resultSet=preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt("score");
+            }
+
+        }catch (SQLException e){}
+        return null;
+    }
 }

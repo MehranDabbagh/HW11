@@ -26,8 +26,13 @@ courseStudentRepository.scoring(student,course,score);
     }
 
     @Override
-    public List<Integer> courseByTerm( Integer studentId) {
+    public List<Integer> courseByStudentId( Integer studentId) {
         return courseStudentRepository.findCourseIdByStudentId(studentId);
+    }
+
+    @Override
+    public Integer score(Student student, Course course) {
+        return courseStudentRepository.score(student,course);
     }
 
 

@@ -8,6 +8,7 @@ import java.util.List;
 public interface CourseStudentService {
     void unitSelecting(Student student, Course course);
     void scoring(Student student, Course course,Integer score);
-    List<Integer> courseByTerm( Integer studentId);
+    List<Integer> courseByStudentId( Integer studentId);
+    Integer score(Student student,Course course);
 
 }

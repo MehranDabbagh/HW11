@@ -13,5 +13,6 @@ public interface CourseStudentRepository {
     void scoring(Student student,Course course,Integer score);
     List<Integer> findCourseIdByStudentId(Integer id);
     void delete(Student student,Course course);
+    Integer score(Student student,Course course);
 
 }
