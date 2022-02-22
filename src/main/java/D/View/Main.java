@@ -7,10 +7,12 @@ import D.Entities.Course;
 import D.Entities.Employee;
 import D.Entities.Prof;
 import D.Entities.Student;
+import D.Service.CourseStudentService;
 import D.Service.Impl.*;
 
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -94,8 +96,33 @@ public class Main {
         }
 
     }
-    public static void profMenu(Integer Id){}
-    public static void studentMenu(Integer Id){}
+    public static void profMenu(Integer Id){
+        boolean flag=true;
+        while(flag){
+            System.out.println("1-showin details!"+"\n"+"2-submiting a score"+"\n"+"3-showing payment"+"\n"+"4-exit");
+              try {
+                  Integer operator= input.nextInt();
+                  if(operator>4 || operator<1){
+                      throw new OutOfRangeInput("please enter something in range!");
+                  }
+                  switch (operator){
+                      case 1:Prof prof=profService.findById(Id);
+                          System.out.println("id:" + prof.getId() + " firstname:" + prof.getFirstname() + " lastname:" + prof.getLastname()+" type:"+
+                                  prof.getType());break;
+                      case 2:submittingScore(Id);break;
+                      case 3:showingPayment(Id);break;
+                      case 4:flag=false;break;
+                  }
+              }catch (InputMismatchException e){
+                  System.out.println("please enter a number!");
+              }catch (OutOfRangeInput e){
+                  System.out.println(e.getMessage());
+              }
+        }
+    }
+    public static void studentMenu(Integer Id){
+
+    }
     public static void CUD(Integer operator1){
         boolean flag=true;
         while(flag){
@@ -505,5 +532,80 @@ if(id>0){
             System.out.println("please enter a number!");
         }
 
+    }
+    public static void submittingScore(Integer id){
+        List<Course> courses=courseService.findAll();
+        for (Course course: courses
+             ) {
+         if(Objects.equals(course.getProfid(), id)){
+             System.out.println("id:" + course.getId() + " course name:" + course.getName() + " prof id:" + course.getProfid()+" :year"+
+                     course.getYear()+" term:"+course.getTerm()+
+                     " unit:"+course.getUnit());
+         }
+        }
+        System.out.println("please enter id of the course that you want to score for:");
+        try {
+            Integer courseId=input.nextInt();
+            Course course= courseService.findById(courseId);
+            if(course==null){
+                throw new OutOfRangeInput("there is no course with this id! try again!");
+            }
+            List<Student> students=studentService.findAll();
+            for (Student student: students
+            ) {
+                System.out.println("id:" + student.getId() + " firstname:" + student.getFirstname() + " lastname:" + student.getLastname());
+            }
+            System.out.println("please enter the id of student that you want to score for:");
+
+                Integer studentId=input.nextInt();
+                Student student= studentService.findById(studentId);
+                if(student==null){
+                    throw new OutOfRangeInput("there is no student with this id! try again!");
+                }
+         List<Integer> coursesId= courseStudentService.courseByTerm(studentId);
+            for (Integer courseId1:coursesId
+                 ) {
+                if(Objects.equals(courseId1, courseId)){
+                    System.out.println("please enter score:");
+                    Integer score=input.nextInt();
+                    if(score>20 || score<0) {
+                        throw new OutOfRangeInput("wrong score type!");
+                    }
+                    courseStudentService.scoring(student,course,score);
+
+                }
+            }
+            System.out.println("this student did not pick any this course with you!");
+        }catch (InputMismatchException e){
+            System.out.println("please enter a number!");
+        }catch (OutOfRangeInput e){
+            System.out.println(e.getMessage());
+        }
+    }
+    public static void showingPayment(Integer id){
+        Prof prof=profService.findById(id);
+        System.out.println("please enter year:");
+        Integer yearOfCourse= input.nextInt();
+        if(yearOfCourse>1400 || yearOfCourse<1390){
+            throw new OutOfRangeInput("there is no year with this condition!");
+        }
+        System.out.println("please enter term:");
+        Integer term= input.nextInt();
+        if(term>2 || term<1){
+            throw new OutOfRangeInput("wrong type of term!");
+        }
+        List<Course> courses=courseService.findAll();
+        int counter=0;
+        for (Course course:courses
+             ) {
+            if(Objects.equals(course.getProfid(), id) && Objects.equals(course.getYear(), yearOfCourse) && Objects.equals(course.getTerm(), term)){
+                counter+=course.getUnit();
+            }
+        }
+        if(Objects.equals(prof.getType(), "heyatelmi")){
+            System.out.println("your salary is :"+5000+(counter*1000));
+        }else {
+            System.out.println("your salary is :"+(counter*1000));
+        }
     }
 }
