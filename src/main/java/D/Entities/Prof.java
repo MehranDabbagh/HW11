@@ -8,6 +8,11 @@ private String type;
         this.type = type;
     }
 
+    public Prof(String firstname, String lastname, String username, String password, String type) {
+        super(firstname, lastname, username, password);
+        this.type = type;
+    }
+
     public Prof(String username, String password) {
         super(username, password);
     }

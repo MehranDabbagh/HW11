@@ -3,6 +3,7 @@ package D.View;
 
 
 import CustomExceptions.OutOfRangeInput;
+import D.Entities.Course;
 import D.Entities.Employee;
 import D.Entities.Prof;
 import D.Entities.Student;
@@ -10,7 +11,6 @@ import D.Service.Impl.*;
 
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -75,10 +75,10 @@ public class Main {
                 throw new OutOfRangeInput("please enter something in range!");
             }
             switch (operator){
-                case 1:employeeCUD();break;
-                case 2:profCUD();break;
-                case 3:studentCUD();break;
-                case 4:courseCUD();break;
+                case 1:CUD(1);break;
+                case 2:CUD(2);break;
+                case 3:CUD(3);break;
+                case 4:CUD(4);break;
                 case 5:
                     Employee employee=employeeService.findById(Id);
                     System.out.println("firstname:"+employee.getFirstname()+" lastname:"+employee.getLastname()+
@@ -96,7 +96,7 @@ public class Main {
     }
     public static void profMenu(Integer Id){}
     public static void studentMenu(Integer Id){}
-    public static void employeeCUD(){
+    public static void CUD(Integer operator1){
         boolean flag=true;
         while(flag){
             System.out.println("1-adding"+"\n"+"2-editing"+"\n"+"3-deleting"+"\n"+"4-exit");
@@ -106,9 +106,25 @@ public class Main {
                     throw new OutOfRangeInput("please enter a number!");
                 }
                 switch (operator){
-                    case 1:employeeCreating();break;
-                    case 2:employeeEditing();break;
-                    case 3:employeeDeleting();break;
+                    case 1:
+                        switch (operator1){
+                            case 1:  employeeCreating();break;
+                            case 2:profCreating();break;
+                            case 3:studentCreating();break;
+                            case 4:courseCreating();break;
+                        }
+                    case 2:  switch (operator1){
+                        case 1:  employeeEditing();break;
+                        case 2:profEditing();break;
+                        case 3:studentEditing();break;
+                        case 4:courseEditing();break;
+                    }
+                    case 3:  switch (operator1){
+                        case 1:  employeeDeleting();break;
+                        case 2:profDeleting();break;
+                        case 3:studentDeleting();break;
+                        case 4:courseDeleting();break;
+                    }
                     case 4:flag=false;
                 }
             }catch (InputMismatchException e){
@@ -116,13 +132,8 @@ public class Main {
             }catch (OutOfRangeInput e){
                 System.out.println(e.getMessage());
             }
-
-
         }
     }
-    public static void profCUD(){}
-    public static void studentCUD(){}
-    public static void courseCUD(){}
     public static void employeeCreating(){
         System.out.println("please enter firstname:");
         String firstname=input.next();
@@ -158,5 +169,341 @@ if(id>0){
         }
 
     }
-    public static void employeeEditing(){}
+    public static void employeeEditing(){
+        boolean flag=true;
+        while(flag) {
+            System.out.println("1-firstname" + "\n" + "2-lastname" + "\n" + "3-username" + "\n" + "4-password" + "\n" + "5-exit");
+        try {
+            Integer operator= input.nextInt();
+            if(operator>5 || operator<1){
+                throw new OutOfRangeInput("please enter something in range!");
+            }
+            List<Employee> employeeList = employeeService.findAll();
+            for (Employee employee : employeeList
+            ) {
+                System.out.println("id:" + employee.getId() + " firstname:" + employee.getFirstname() + " lastname:" + employee.getLastname());
+            }
+            System.out.println("please enter id of the employee you want to delete:");
+
+                Integer id = input.nextInt();
+                Employee employee = employeeService.findById(id);
+                if (employee != null) {
+                    String newValue = input.next();
+                    switch (operator) {
+                        case 1:employee.setFirstname(newValue);employeeService.Update(employee);break;
+                        case 2:employee.setLastname(newValue);employeeService.Update(employee);break;
+                        case 3:employee.setUsername(newValue);employeeService.Update(employee);break;
+                        case 4:employee.setPassword(newValue);employeeService.Update(employee);break;
+                        case 5:flag=false;break;
+                    }
+                }else {
+                    System.out.println("there is no employee whit this id!");
+                }
+
+
+        }catch (InputMismatchException e){
+            System.out.println("please enter a number!");
+        }catch (OutOfRangeInput e){
+            System.out.println(e.getMessage());
+        }
+        }
+    }
+    public static void profCreating(){
+        System.out.println("please enter firstname:");
+        String firstname=input.next();
+        System.out.println("please enter lastname:");
+        String lastname=input.next();
+        System.out.println("please enter username:");
+        String username=input.next();
+        System.out.println("please enter password:");
+        String password=input.next();
+        System.out.println("please enter 1 for haghol tadris and 2 for heyat elmi");
+        try {
+            Integer operator= input.nextInt();
+            if(operator!=2 && operator!=1){
+                throw new OutOfRangeInput("not valid job type!");
+            }
+            int id=  profService.create(new Prof(firstname,lastname,username,password,operator==1? "hagholtadris":"heyatelmi"));
+            if(id>0){
+                System.out.println("done!");
+            }
+        }catch (InputMismatchException e){
+            System.out.println("not valid job type!");
+        }catch (OutOfRangeInput e){
+            System.out.println(e.getMessage());
+        }
+
+
+    }
+    public static void profDeleting(){
+        List<Prof> profs = profService.findAll();
+        for (Prof prof : profs
+        ) {
+            System.out.println("id:" + prof.getId() + " firstname:" + prof.getFirstname() + " lastname:" + prof.getLastname()+" type:"+
+                    prof.getType());
+        }
+        System.out.println("please enter id of the employee you want to delete:");
+        try {
+            Integer id=input.nextInt();
+            Prof prof=profService.findById(id);
+            if(prof!=null){
+                profService.Delete(id);
+
+            }else {
+                System.out.println("there is no employee with this id!");
+            }
+        }catch (InputMismatchException e){
+            System.out.println("please enter a number!");
+        }
+    }
+    public static void profEditing(){
+        boolean flag=true;
+        while(flag) {
+            System.out.println("1-firstname" + "\n" + "2-lastname" + "\n" + "3-username" + "\n" + "4-password" + "\n" + "5-type"+"\n"+"6-exit");
+            try {
+                Integer operator= input.nextInt();
+                if(operator>5 || operator<1){
+                    throw new OutOfRangeInput("please enter something in range!");
+                }
+                List<Prof> profList = profService.findAll();
+                for (Prof prof : profList
+                ) {
+                    System.out.println("id:" + prof.getId() + " firstname:" + prof.getFirstname() + " lastname:" + prof.getLastname());
+                }
+                System.out.println("please enter id of the prof you want to delete:");
+
+                Integer id = input.nextInt();
+                Prof prof = profService.findById(id);
+                if (prof != null) {
+                    String newValue = input.next();
+                    switch (operator) {
+                        case 1:prof.setFirstname(newValue);profService.Update(prof);break;
+                        case 2:prof.setLastname(newValue);profService.Update(prof);break;
+                        case 3:prof.setUsername(newValue);profService.Update(prof);break;
+                        case 4:prof.setPassword(newValue);profService.Update(prof);break;
+                        case 5:
+                        case 6:flag=false;break;
+                    }
+                }else {
+                    System.out.println("there is no prof whit this id!");
+                }
+
+
+            }catch (InputMismatchException e){
+                System.out.println("please enter a number!");
+            }catch (OutOfRangeInput e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    public static void studentCreating(){
+        System.out.println("please enter firstname:");
+        String firstname=input.next();
+        System.out.println("please enter lastname:");
+        String lastname=input.next();
+        System.out.println("please enter username:");
+        String username=input.next();
+        System.out.println("please enter password:");
+        String password=input.next();
+        int id=  studentService.create(new Student(firstname,lastname,username,password));
+        if(id>0){
+            System.out.println("done!");
+        }
+    }
+    public static void studentEditing(){
+        boolean flag=true;
+        while(flag) {
+            System.out.println("1-firstname" + "\n" + "2-lastname" + "\n" + "3-username" + "\n" + "4-password" + "\n" + "5-exit");
+            try {
+                Integer operator= input.nextInt();
+                if(operator>5 || operator<1){
+                    throw new OutOfRangeInput("please enter something in range!");
+                }
+                List<Student> students = studentService.findAll();
+                for (Student student : students
+                ) {
+                    System.out.println("id:" + student.getId() + " firstname:" + student.getFirstname() + " lastname:" + student.getLastname());
+                }
+                System.out.println("please enter id of the employee you want to delete:");
+
+                Integer id = input.nextInt();
+                Student student = studentService.findById(id);
+                if (student != null) {
+                    String newValue = input.next();
+                    switch (operator) {
+                        case 1:student.setFirstname(newValue);studentService.Update(student);break;
+                        case 2:student.setLastname(newValue);studentService.Update(student);break;
+                        case 3:student.setUsername(newValue);studentService.Update(student);break;
+                        case 4:student.setPassword(newValue);studentService.Update(student);break;
+                        case 5:flag=false;break;
+                    }
+                }else {
+                    System.out.println("there is no employee whit this id!");
+                }
+
+
+            }catch (InputMismatchException e){
+                System.out.println("please enter a number!");
+            }catch (OutOfRangeInput e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    public static  void studentDeleting(){
+        List<Student> studentList = studentService.findAll();
+        for (Student student : studentList
+        ) {
+            System.out.println("id:" + student.getId() + " firstname:" + student.getFirstname() + " lastname:" + student.getLastname());
+        }
+        System.out.println("please enter id of the student you want to delete:");
+        try {
+            Integer id=input.nextInt();
+            Student student=studentService.findById(id);
+            if(student!=null){
+                studentService.Delete(id);
+
+            }else {
+                System.out.println("there is no student with this id!");
+            }
+        }catch (InputMismatchException e){
+            System.out.println("please enter a number!");
+        }
+
+    }
+    public static void courseCreating(){
+
+        try {
+            System.out.println("please enter coursename:");
+            String courseName=input.next();
+            System.out.println("please enter year:");
+            Integer yearOfCourse= input.nextInt();
+            if(yearOfCourse>1400 || yearOfCourse<1390){
+                throw new OutOfRangeInput("there is no year with this condition!");
+            }
+            System.out.println("please enter term:");
+            Integer term= input.nextInt();
+            if(term>2 || term<1){
+                throw new OutOfRangeInput("wrong type of term!");
+            }
+            System.out.println("please enter number of unit:");
+            Integer unit= input.nextInt();
+            if(unit>4 || unit<1){
+                throw new OutOfRangeInput("wrong type of unit!");
+            }
+            List<Prof> profs=profService.findAll();
+            for (Prof prof : profs
+            ) {
+                System.out.println("id:" + prof.getId() + " firstname:" + prof.getFirstname() + " lastname:" + prof.getLastname());
+            }
+            System.out.println("please enter id of the prof you want to select:");
+
+            Integer profId = input.nextInt();
+            Prof prof = profService.findById(profId);
+            if (prof != null) {
+                int id=courseService.create(new Course(courseName,profId,yearOfCourse,term,unit));
+                if (id > 0) {
+                    System.out.println("done!");
+                }
+            }
+            System.out.println("there is no prof with this id!please try again!");
+        }catch (InputMismatchException e){
+            System.out.println("please etner a number!");
+        }catch (OutOfRangeInput e){
+            System.out.println(e.getMessage());
+        }
+
+    }
+    public static void courseEditing(){
+        boolean flag=true;
+        while(flag) {
+            System.out.println("1-course name" + "\n" + "2-prof" + "\n" + "3-term" + "\n" + "4-year" + "\n" + "5-unit"+"\n"+"6-exit");
+            try {
+                Integer operator= input.nextInt();
+                if(operator>6 || operator<1){
+                    throw new OutOfRangeInput("please enter something in range!");
+                }
+                List<Course> courses = courseService.findAll();
+                for (Course course : courses
+                ) {
+                    System.out.println("id:" + course.getId() + " course name:" + course.getName() + " prof id:" + course.getProfid()+" :year"+
+                            course.getYear()+" term:"+course.getTerm()+
+                            " unit:"+course.getUnit());
+                }
+                System.out.println("please enter id of the course you want to edit:");
+                Integer id = input.nextInt();
+                Course course = courseService.findById(id);
+                if (course != null) {
+
+                    switch (operator) {
+                        case 1:
+                            String newValue = input.next();
+                            course.setName(newValue);courseService.Update(course);break;
+                        case 2:
+                            List<Prof> profList = profService.findAll();
+                            for (Prof prof : profList
+                            ) {
+                                System.out.println("id:" + prof.getId() + " firstname:" + prof.getFirstname() + " lastname:" + prof.getLastname());
+                            }
+                            System.out.println("please enter id of the prof you want to delete:");
+
+                            Integer profid = input.nextInt();
+                            Prof prof = profService.findById(profid);
+                            if (prof != null) {
+                            course.setProfid(profid);courseService.Update(course);break;}else{
+                                System.out.println("there is no prof with this id!");break;
+                            }
+
+                        case 3:
+                            Integer newTerm =input.nextInt();
+                            if(newTerm >2 || newTerm <1){
+                                throw new OutOfRangeInput("wrong type term!");
+                            }
+                            course.setTerm(newTerm);courseService.Update(course);break;
+                        case 4:
+                            Integer newYear=input.nextInt();
+                            if(newYear >1400 || newYear <1390){
+                                throw new OutOfRangeInput("wrong type term!");
+                            }
+                            course.setYear(newYear);courseService.Update(course);break;
+                        case 5: Integer newUnit=input.nextInt();
+                            if(newUnit >4 || newUnit <1){
+                                throw new OutOfRangeInput("wrong type term!");
+                            }
+                            course.setUnit(newUnit);courseService.Update(course);break;
+                        case 6:flag=false;break;
+                    }
+                }else {
+                    System.out.println("there is no employee whit this id!");
+                }
+
+
+            }catch (InputMismatchException e){
+                System.out.println("please enter a number!");
+            }catch (OutOfRangeInput e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    public static void courseDeleting(){
+        List<Course> courses = courseService.findAll();
+        for (Course course : courses
+        ) {
+            System.out.println("id:" + course.getId() + " course name:" + course.getName() + " prof id:" + course.getProfid()+" :year"+
+                    course.getYear()+" term:"+course.getTerm()+
+                    " unit:"+course.getUnit());        }
+        System.out.println("please enter id of the course you want to delete:");
+        try {
+            Integer id=input.nextInt();
+            Course course=courseService.findById(id);
+            if(course!=null){
+                courseService.Delete(id);
+
+            }else {
+                System.out.println("there is no course with this id!");
+            }
+        }catch (InputMismatchException e){
+            System.out.println("please enter a number!");
+        }
+
+    }
 }
