@@ -18,15 +18,15 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     @Override
     public void create(Employee employee) {
 try {
- employee.setId(employees.size()+1l);
+
  employees.add(employee);
 }catch (NullPointerException e) {
 }
     }
 
     @Override
-    public Employee findById(Integer id) {
-        return employees.stream().filter(x-> Objects.equals(x.getId(), id)).collect(Collectors.toList()).get(0);
+    public Employee findByUsername(String username) {
+        return employees.stream().filter(x-> Objects.equals(x.getUsername(), username)).collect(Collectors.toList()).get(0);
 
     }
 
@@ -39,7 +39,7 @@ try {
     public void Update(Employee employee) {
         employees
                 .stream()
-                .filter(student1 -> Objects.equals(student1.getId(), employee.getId())).forEach(x->x=employee);
+                .filter(student1 -> Objects.equals(student1.getUsername(), employee.getUsername())).forEach(x->x=employee);
 
     }
 

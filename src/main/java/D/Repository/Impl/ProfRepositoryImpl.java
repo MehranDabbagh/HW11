@@ -18,7 +18,7 @@ public class ProfRepositoryImpl implements ProfRepository {
     @Override
     public void create(Prof prof) {
         try {
-            prof.setId(profs.size()+1L);
+
             profs.add(prof);
         }catch (NullPointerException e){
 
@@ -27,8 +27,8 @@ public class ProfRepositoryImpl implements ProfRepository {
     }
 
     @Override
-    public Prof findById(Integer id) {
-        return profs.stream().filter(x-> Objects.equals(x.getId(), id)).collect(Collectors.toList()).get(0);
+    public Prof findByUsername(String username) {
+        return profs.stream().filter(x-> Objects.equals(x.getUsername(), username)).collect(Collectors.toList()).get(0);
 
     }
 
@@ -41,7 +41,7 @@ public class ProfRepositoryImpl implements ProfRepository {
     public void Update(Prof prof) {
         profs
                 .stream()
-                .filter(student1 -> Objects.equals(student1.getId(), prof.getId())).forEach(x->x=prof);
+                .filter(student1 -> Objects.equals(student1.getUsername(), prof.getUsername())).forEach(x->x=prof);
 
     }
 

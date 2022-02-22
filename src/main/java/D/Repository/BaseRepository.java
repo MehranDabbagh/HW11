@@ -1,12 +1,12 @@
 package D.Repository;
 
-import D.Entities.BaseEntity;
+
 
 import java.util.List;
 
-public interface BaseRepository<T extends BaseEntity,I> {
+public interface BaseRepository<T ,I> {
 void create(T t);
-T findById(I id);
+T findByUsername(I id);
 List<T> findAll();
 void Update(T t);
 void Delete(T t);

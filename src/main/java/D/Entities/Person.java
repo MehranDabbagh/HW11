@@ -1,13 +1,16 @@
 package D.Entities;
 
-public  class Person  extends BaseEntity{
+public  class Person {
     private String firstname;
     private String lastname;
     private String username;
     private String password;
 
-    public Person(Long id) {
-        super(id);
+    public Person(String firstname, String lastname, String username, String password) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = username;
+        this.password = password;
     }
 
     public String getFirstname() {

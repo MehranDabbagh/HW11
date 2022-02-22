@@ -2,5 +2,5 @@ package D.Repository;
 
 import D.Entities.Student;
 
-public interface StudentRepository extends BaseRepository<Student,Integer> {
+public interface StudentRepository extends BaseRepository<Student,String> {
 }

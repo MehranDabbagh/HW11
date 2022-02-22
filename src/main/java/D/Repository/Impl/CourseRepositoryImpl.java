@@ -17,7 +17,7 @@ public class CourseRepositoryImpl implements CourseRepository {
     @Override
     public void create(Course course) {
         try {
-            course.setId(courses.size()+1L);
+
             courses.add(course);
         }catch (NullPointerException e){
 
@@ -25,8 +25,8 @@ public class CourseRepositoryImpl implements CourseRepository {
     }
 
     @Override
-    public Course findById(Long id) {
-       return courses.stream().filter(x-> Objects.equals(x.getId(), id)).collect(Collectors.toList()).get(0);
+    public Course findByUsername(String name) {
+       return courses.stream().filter(x-> Objects.equals(x.getName(), name)).collect(Collectors.toList()).get(0);
 
     }
 
@@ -40,7 +40,7 @@ public class CourseRepositoryImpl implements CourseRepository {
     public void Update(Course course) {
         courses
         .stream()
-        .filter(course1 -> Objects.equals(course1.getId(), course.getId())).forEach(x->x=course);
+        .filter(course1 -> Objects.equals(course1.getName(), course.getName())).forEach(x->x=course);
     }
 
     @Override
