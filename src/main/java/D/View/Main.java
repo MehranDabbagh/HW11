@@ -276,6 +276,7 @@ if(id>0){
 
         }catch (InputMismatchException e){
             System.out.println("please enter a number!");
+            input.nextLine();
         }catch (OutOfRangeInput e){
             System.out.println(e.getMessage());
         }
@@ -339,16 +340,20 @@ if(id>0){
                 if(operator>5 || operator<1){
                     throw new OutOfRangeInput("please enter something in range!");
                 }
+                if(operator==6){
+                    return;
+                }
                 List<Prof> profList = profService.findAll();
                 for (Prof prof : profList
                 ) {
                     System.out.println("id:" + prof.getId() + " firstname:" + prof.getFirstname() + " lastname:" + prof.getLastname());
                 }
-                System.out.println("please enter id of the prof you want to delete:");
+                System.out.println("please enter id of the prof you want to edit:");
 
                 Integer id = input.nextInt();
                 Prof prof = profService.findById(id);
                 if (prof != null) {
+                    System.out.println("please enter new value:");
                     String newValue = input.next();
                     switch (operator) {
                         case 1:prof.setFirstname(newValue);profService.Update(prof);break;
@@ -365,6 +370,7 @@ if(id>0){
 
             }catch (InputMismatchException e){
                 System.out.println("please enter a number!");
+                input.nextLine();
             }catch (OutOfRangeInput e){
                 System.out.println(e.getMessage());
             }
@@ -393,6 +399,9 @@ if(id>0){
                 if(operator>5 || operator<1){
                     throw new OutOfRangeInput("please enter something in range!");
                 }
+                if(operator==5){
+                    return;
+                }
                 List<Student> students = studentService.findAll();
                 for (Student student : students
                 ) {
@@ -403,6 +412,7 @@ if(id>0){
                 Integer id = input.nextInt();
                 Student student = studentService.findById(id);
                 if (student != null) {
+                    System.out.println("please enter new value:");
                     String newValue = input.next();
                     switch (operator) {
                         case 1:student.setFirstname(newValue);studentService.Update(student);break;
@@ -418,6 +428,7 @@ if(id>0){
 
             }catch (InputMismatchException e){
                 System.out.println("please enter a number!");
+                input.nextLine();
             }catch (OutOfRangeInput e){
                 System.out.println(e.getMessage());
             }
@@ -496,6 +507,9 @@ if(id>0){
                 if(operator>6 || operator<1){
                     throw new OutOfRangeInput("please enter something in range!");
                 }
+                if(operator==6){
+                    return;
+                }
                 List<Course> courses = courseService.findAll();
                 for (Course course : courses
                 ) {
@@ -510,6 +524,7 @@ if(id>0){
 
                     switch (operator) {
                         case 1:
+                            System.out.println("please enter new value:");
                             String newValue = input.next();
                             course.setName(newValue);courseService.Update(course);break;
                         case 2:
@@ -519,7 +534,6 @@ if(id>0){
                                 System.out.println("id:" + prof.getId() + " firstname:" + prof.getFirstname() + " lastname:" + prof.getLastname());
                             }
                             System.out.println("please enter id of the prof you want to delete:");
-
                             Integer profid = input.nextInt();
                             Prof prof = profService.findById(profid);
                             if (prof != null) {
@@ -528,18 +542,21 @@ if(id>0){
                             }
 
                         case 3:
+                            System.out.println("please enter new value:");
                             Integer newTerm =input.nextInt();
                             if(newTerm >2 || newTerm <1){
                                 throw new OutOfRangeInput("wrong type term!");
                             }
                             course.setTerm(newTerm);courseService.Update(course);break;
                         case 4:
+                            System.out.println("please enter new value:");
                             Integer newYear=input.nextInt();
                             if(newYear >1400 || newYear <1390){
                                 throw new OutOfRangeInput("wrong type term!");
                             }
                             course.setYear(newYear);courseService.Update(course);break;
-                        case 5: Integer newUnit=input.nextInt();
+                        case 5:System.out.println("please enter new value:");
+                            Integer newUnit=input.nextInt();
                             if(newUnit >4 || newUnit <1){
                                 throw new OutOfRangeInput("wrong type term!");
                             }
@@ -553,6 +570,7 @@ if(id>0){
 
             }catch (InputMismatchException e){
                 System.out.println("please enter a number!");
+                input.nextLine();
             }catch (OutOfRangeInput e){
                 System.out.println(e.getMessage());
             }
