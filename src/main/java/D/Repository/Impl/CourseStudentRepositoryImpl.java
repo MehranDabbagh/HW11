@@ -76,6 +76,6 @@ public class CourseStudentRepositoryImpl implements CourseStudentRepository {
             }
 
         }catch (SQLException e){}
-        return null;
+        return 0;
     }
 }

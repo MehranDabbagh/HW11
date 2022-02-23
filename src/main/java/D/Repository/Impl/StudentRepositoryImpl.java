@@ -24,7 +24,7 @@ public class StudentRepositoryImpl implements StudentRepository {
             preparedStatement.setString(3,student.getUsername());
             preparedStatement.setString(4, student.getPassword());
             preparedStatement.execute();
-            sql="select id from prof where firstname=? and lastname=? and username=? and password=? ";
+            sql="select id from student where firstname=? and lastname=? and username=? and password=? ";
             preparedStatement=connection.prepareStatement(sql);
             preparedStatement.setString(1, student.getFirstname());
             preparedStatement.setString(2,student.getLastname());
@@ -36,7 +36,7 @@ public class StudentRepositoryImpl implements StudentRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
     @Override

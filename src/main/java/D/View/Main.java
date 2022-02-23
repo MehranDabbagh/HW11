@@ -64,7 +64,7 @@ public class Main {
         Integer id=studentService.login(new Student(username,password));
         if(id!=0){
             studentMenu(id);
-        }
+        }else System.out.println("there is no student with this username and password!");
     }
     public static void employeeMenu(Integer Id){
         boolean flag=true;
@@ -329,6 +329,7 @@ if(id>0){
             }
         }catch (InputMismatchException e){
             System.out.println("please enter a number!");
+            input.nextLine();
         }
     }
     public static void profEditing(){
@@ -407,7 +408,7 @@ if(id>0){
                 ) {
                     System.out.println("id:" + student.getId() + " firstname:" + student.getFirstname() + " lastname:" + student.getLastname());
                 }
-                System.out.println("please enter id of the employee you want to delete:");
+                System.out.println("please enter id of the student you want to delete:");
 
                 Integer id = input.nextInt();
                 Student student = studentService.findById(id);
@@ -422,7 +423,7 @@ if(id>0){
                         case 5:flag=false;break;
                     }
                 }else {
-                    System.out.println("there is no employee whit this id!");
+                    System.out.println("there is no student whit this id!");
                 }
 
 
@@ -452,6 +453,7 @@ if(id>0){
             }
         }catch (InputMismatchException e){
             System.out.println("please enter a number!");
+            input.nextLine();
         }
 
     }
@@ -488,11 +490,13 @@ if(id>0){
                 int id=courseService.create(new Course(courseName,profId,yearOfCourse,term,unit));
                 if (id > 0) {
                     System.out.println("done!");
+                    return;
                 }
             }
             System.out.println("there is no prof with this id!please try again!");
         }catch (InputMismatchException e){
-            System.out.println("please etner a number!");
+            System.out.println("please enter a number!");
+            input.nextLine();
         }catch (OutOfRangeInput e){
             System.out.println(e.getMessage());
         }
@@ -533,7 +537,7 @@ if(id>0){
                             ) {
                                 System.out.println("id:" + prof.getId() + " firstname:" + prof.getFirstname() + " lastname:" + prof.getLastname());
                             }
-                            System.out.println("please enter id of the prof you want to delete:");
+                            System.out.println("please enter id of the prof you want to add:");
                             Integer profid = input.nextInt();
                             Prof prof = profService.findById(profid);
                             if (prof != null) {
@@ -564,7 +568,7 @@ if(id>0){
                         case 6:flag=false;break;
                     }
                 }else {
-                    System.out.println("there is no employee whit this id!");
+                    System.out.println("there is no course whit this id!");
                 }
 
 
@@ -595,6 +599,7 @@ if(id>0){
             }
         }catch (InputMismatchException e){
             System.out.println("please enter a number!");
+            input.nextLine();
         }
 
     }
@@ -637,10 +642,11 @@ if(id>0){
                         throw new OutOfRangeInput("wrong score type!");
                     }
                     courseStudentService.scoring(student,course,score);
+                    return;
 
                 }
             }
-            System.out.println("this student did not pick any this course with you!");
+            System.out.println("this student did not pick  this course with you!");
         }catch (InputMismatchException e){
             System.out.println("please enter a number!");
         }catch (OutOfRangeInput e){
@@ -701,6 +707,7 @@ if(id>0){
             }
         }catch (InputMismatchException e){
             System.out.println("please enter a number!");
+            input.nextLine();
         }catch (OutOfRangeInput e){
             System.out.println(e.getMessage());
         }
@@ -727,10 +734,12 @@ if(id>0){
         Integer scoreCounter=0;
         Integer unitCounter=0;
         Student student=studentService.findById(id);
-        for (Course course:courses
+        List<Integer> coursesId=courseStudentService.courseByStudentId(student.getId());
+        for (Integer a:coursesId
         ) {
+            Course course=courseService.findById(a);
             if(Objects.equals(course.getYear(), exYear) && Objects.equals(course.getTerm(), exTerm)){
-                scoreCounter+=courseStudentService.score(student,course);
+                scoreCounter+=courseStudentService.score(student,course)*course.getUnit();
                 unitCounter+=course.getUnit();
             }
         }
@@ -742,12 +751,13 @@ if(id>0){
         try {
             Integer courseId=input.nextInt();
            Course course= courseService.findById(courseId);
-           if(course==null || Objects.equals(course.getYear(), year) && Objects.equals(course.getTerm(), term)){
+           if(course==null || !Objects.equals(course.getYear(), year) || !Objects.equals(course.getTerm(), term)){
                throw new OutOfRangeInput("there is no course with this id in this term! ");
            }
-            for (Course course1:courses
+           List<Integer> coursesId1=courseStudentService.courseByStudentId(student.getId());
+            for (Integer a1:coursesId1
             ) {
-
+                 Course course1=courseService.findById(a1);
                 if(Objects.equals(course1.getYear(), year) && Objects.equals(course1.getTerm(), term) && Objects.equals(course1.getId(), course.getId())){
                     System.out.println("you have already picked this unit !");
                     return;
@@ -756,6 +766,7 @@ if(id>0){
                     unitCounter+=course.getUnit();
                 }
             }
+
            if(lastTermAvg>18){
                if(unitCounter+course.getUnit()>24){
                    System.out.println("you can not pick more than 24 unit!");
@@ -770,6 +781,7 @@ if(id>0){
            }
         }catch (InputMismatchException e){
             System.out.println("please enter a number!");
+            input.nextLine();
         }catch (OutOfRangeInput e){
             System.out.println(e.getMessage());
         }
@@ -799,9 +811,9 @@ if(id>0){
              System.out.println("you can not delete this unit! it has already been scored!");
              return;
          }
-         courseStudentService.Delete(student,course);
+         courseStudentService.Delete(student,course1);
         }catch (InputMismatchException e){
-
+            input.nextLine();
         }
 
     }
