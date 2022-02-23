@@ -52,13 +52,13 @@ public class Main {
         Integer id=employeeService.login(new Employee(username,password));
         if(id!=0){
             employeeMenu(id);
-        }
+        }else System.out.println("there is no employee with this username and password!");
     }
     public static void profLogin(String username,String password){
         Integer id=profService.login(new Prof(username,password));
         if(id!=0){
             profMenu(id);
-        }
+        }else System.out.println("there is no prof with this username and password!");
     }
     public static void studentLogin(String username,String password){
         Integer id=studentService.login(new Student(username,password));
