@@ -116,6 +116,7 @@ public class Main {
                   }
               }catch (InputMismatchException e){
                   System.out.println("please enter a number!");
+                  input.nextLine();
               }catch (OutOfRangeInput e){
                   System.out.println(e.getMessage());
               }
@@ -157,6 +158,7 @@ while(flag){
         }
     }catch (InputMismatchException e){
         System.out.println("please enter a number!");
+        input.nextLine();
     }catch (OutOfRangeInput e){
         System.out.println(e.getMessage());
     }
@@ -198,6 +200,7 @@ while(flag){
                 }
             }catch (InputMismatchException e){
                 System.out.println("please enter a number!");
+                input.nextLine();
             }catch (OutOfRangeInput e){
                 System.out.println(e.getMessage());
             }
@@ -235,6 +238,7 @@ if(id>0){
             }
         }catch (InputMismatchException e){
             System.out.println("please enter a number!");
+            input.nextLine();
         }
 
     }
@@ -649,34 +653,42 @@ if(id>0){
             System.out.println("this student did not pick  this course with you!");
         }catch (InputMismatchException e){
             System.out.println("please enter a number!");
+            input.nextLine();
         }catch (OutOfRangeInput e){
             System.out.println(e.getMessage());
         }
     }
     public static void showingPayment(Integer id){
-        Prof prof=profService.findById(id);
-        System.out.println("please enter year:");
-        Integer yearOfCourse= input.nextInt();
-        if(yearOfCourse>1400 || yearOfCourse<1390){
-            throw new OutOfRangeInput("there is no year with this condition!");
-        }
-        System.out.println("please enter term:");
-        Integer term= input.nextInt();
-        if(term>2 || term<1){
-            throw new OutOfRangeInput("wrong type of term!");
-        }
-        List<Course> courses=courseService.findAll();
-        int counter=0;
-        for (Course course:courses
-             ) {
-            if(Objects.equals(course.getProfid(), id) && Objects.equals(course.getYear(), yearOfCourse) && Objects.equals(course.getTerm(), term)){
-                counter+=course.getUnit();
+        try {
+            Prof prof = profService.findById(id);
+            System.out.println("please enter year:");
+            Integer yearOfCourse = input.nextInt();
+            if (yearOfCourse > 1400 || yearOfCourse < 1390) {
+                throw new OutOfRangeInput("there is no year with this condition!");
             }
-        }
-        if(Objects.equals(prof.getType(), "heyatelmi")){
-            System.out.println("your salary is :"+5000+(counter*1000));
-        }else {
-            System.out.println("your salary is :"+(counter*1000));
+            System.out.println("please enter term:");
+            Integer term = input.nextInt();
+            if (term > 2 || term < 1) {
+                throw new OutOfRangeInput("wrong type of term!");
+            }
+            List<Course> courses = courseService.findAll();
+            int counter = 0;
+            for (Course course : courses
+            ) {
+                if (Objects.equals(course.getProfid(), id) && Objects.equals(course.getYear(), yearOfCourse) && Objects.equals(course.getTerm(), term)) {
+                    counter += course.getUnit();
+                }
+            }
+            if (Objects.equals(prof.getType(), "heyatelmi")) {
+                System.out.println("your salary is :" + 5000 + (counter * 1000));
+            } else {
+                System.out.println("your salary is :" + (counter * 1000));
+            }
+        }catch (OutOfRangeInput e){
+            System.out.println(e.getMessage());
+        }catch (InputMismatchException e){
+            System.out.println("please enter a number!");
+            input.nextLine();
         }
     }
     public static void unitSelecting(Integer id){
@@ -813,7 +825,10 @@ if(id>0){
          }
          courseStudentService.Delete(student,course1);
         }catch (InputMismatchException e){
+            System.out.println("please enter a number!");
             input.nextLine();
+        }catch (OutOfRangeInput e){
+            System.out.println(e.getMessage());
         }
 
     }
