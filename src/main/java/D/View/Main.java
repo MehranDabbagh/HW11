@@ -337,7 +337,7 @@ if(id>0){
             System.out.println("1-firstname" + "\n" + "2-lastname" + "\n" + "3-username" + "\n" + "4-password" + "\n" + "5-type"+"\n"+"6-exit");
             try {
                 Integer operator= input.nextInt();
-                if(operator>5 || operator<1){
+                if(operator>6 || operator<1){
                     throw new OutOfRangeInput("please enter something in range!");
                 }
                 if(operator==6){
