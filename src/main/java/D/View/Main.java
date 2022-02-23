@@ -84,12 +84,13 @@ public class Main {
                 case 5:
                     Employee employee=employeeService.findById(Id);
                     System.out.println("firstname:"+employee.getFirstname()+" lastname:"+employee.getLastname()+
-                            "payment:150000 T");break;
+                            "  payment:150000 T");break;
                 case 6:flag=false;break;
 
             }
         }catch (InputMismatchException e){
             System.out.println("please enter a number!");
+            input.nextLine();
         }catch (OutOfRangeInput e){
             System.out.println(e.getMessage());
         }
@@ -178,19 +179,22 @@ while(flag){
                             case 3:studentCreating();break;
                             case 4:courseCreating();break;
                         }
+                        break;
                     case 2:  switch (operator1){
                         case 1:  employeeEditing();break;
                         case 2:profEditing();break;
                         case 3:studentEditing();break;
                         case 4:courseEditing();break;
                     }
+                    break;
                     case 3:  switch (operator1){
                         case 1:  employeeDeleting();break;
                         case 2:profDeleting();break;
                         case 3:studentDeleting();break;
                         case 4:courseDeleting();break;
                     }
-                    case 4:flag=false;
+                    break;
+                    case 4:flag=false;break;
                 }
             }catch (InputMismatchException e){
                 System.out.println("please enter a number!");
@@ -243,16 +247,20 @@ if(id>0){
             if(operator>5 || operator<1){
                 throw new OutOfRangeInput("please enter something in range!");
             }
+            if(operator==5){
+                return;
+            }
             List<Employee> employeeList = employeeService.findAll();
             for (Employee employee : employeeList
             ) {
                 System.out.println("id:" + employee.getId() + " firstname:" + employee.getFirstname() + " lastname:" + employee.getLastname());
             }
-            System.out.println("please enter id of the employee you want to delete:");
+            System.out.println("please enter id of the employee you want to edit:");
 
                 Integer id = input.nextInt();
                 Employee employee = employeeService.findById(id);
                 if (employee != null) {
+                    System.out.println("please enter new value!");
                     String newValue = input.next();
                     switch (operator) {
                         case 1:employee.setFirstname(newValue);employeeService.Update(employee);break;
@@ -293,7 +301,8 @@ if(id>0){
                 System.out.println("done!");
             }
         }catch (InputMismatchException e){
-            System.out.println("not valid job type!");
+            System.out.println("please enter a number!");
+            input.nextLine();
         }catch (OutOfRangeInput e){
             System.out.println(e.getMessage());
         }

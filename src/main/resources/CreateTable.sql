@@ -5,3 +5,4 @@ create table if not exists course(id bigserial primary key,coursename varchar (5
     constraint fk_customer foreign key (profid) references prof(id));
 create table if not exists studentscourses(id bigserial,courseid integer ,studentid integer,score integer,
 constraint fk_customer foreign key (courseid) references course(id),foreign key (studentid) references student(id));
+insert into employee(firstname, lastname, username, password) values ('admin','admin','admin','admin');
